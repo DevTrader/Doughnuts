@@ -1,78 +1,53 @@
-$(document).ready(function() {
-	init();
-	animate();
-	console.log('inside ready');
-});
-let camera, controls, scene, renderer, mesh2, geometry, material;
-		let rmapped = 0;
+var camera, scene, renderer, mesh, material, stats;
+init();
+animate();
 
-		let randomColor = (Math.random() * 0xffffff);
+function init() {
+    // Renderer.
+    renderer = new THREE.WebGLRenderer();
+    //renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    // Add renderer to page
+    document.body.appendChild(renderer.domElement);
 
-		let light = new THREE.AmbientLight(randomColor, 0.7);
-		let light1 = new THREE.PointLight(0xffffff, 0.2);
+    // Create camera.
+    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.z = 400;
 
+    // Create scene.
+    scene = new THREE.Scene();
 
-		//init();
-		//animate();
-		console.log('outside ready 3');
-		function init(){
-			camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1500);
-			camera.position.z = 500;
+    // Create material
+    material = new THREE.MeshPhongMaterial();
 
-			controls = new THREE.TrackballControls(camera);
-			controls.addEventListener('change', render);
+    // Create cube and add to scene.
+    var geometry = new THREE.BoxGeometry(200, 200, 200);
+    mesh = new THREE.Mesh(geometry, material);
+    scene.add(mesh);
 
-			scene = new THREE.Scene();
+    // Create ambient light and add to scene.
+    var light = new THREE.AmbientLight(0x404040); // soft white light
+    scene.add(light);
 
-			light.position.set (0, 1000, 250);
-			scene.add(light);
-			
-			light1.position.set (500, 1500, 450);
-			scene.add(light1);
+    // Create directional light and add to scene.
+    var directionalLight = new THREE.DirectionalLight(0xffffff);
+    directionalLight.position.set(1, 1, 1).normalize();
+    scene.add(directionalLight);
 
-			geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-			material = new THREE.MeshLambertMaterial();
+    // Add listener for window resize.
+    window.addEventListener('resize', onWindowResize, false);
 
-			let mesh = new THREE.Mesh(geometry, material);
-			scene.add(mesh);
+}
 
+function animate() {
+    requestAnimationFrame(animate);
+    mesh.rotation.x += 0.005;
+    mesh.rotation.y += 0.01;
+    renderer.render(scene, camera);
+}
 
-			mesh2 = new THREE.Mesh(geometry, material);
-			
-			//scene.add(mesh2);
-			//mesh2.position(100, 200, 300);
-			window.mesh2 = mesh2;
-			console.log(mesh2);
-
-			addDonut();
-
-			renderer = new THREE.WebGLRenderer({canvas: document.getElementById('myCanvas'), alpha: true});
-			renderer.setSize(window.innerWidth, window.innerHeight);
-
-			render();
-
-		};
-
-		function addDonut(){
-			mesh2 = new THREE.Mesh(geometry, material);
-			mesh2.position.set(Math.random()* 100,Math.random()* 100,Math.random()* 100);
-			scene.add(mesh2);
-			console.log('donut added');
-
-		};
-
-
-
-		function animate(){
-			requestAnimationFrame(animate);
-			controls.update();
-
-  			//randomColor = (Math.random() * 0xffffff);
-  			//light.color.setHex ( randomColor );
-
-		};
-
-		function render(){
-			renderer.render(scene, camera);
-			console.log('hi');
-		};
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}

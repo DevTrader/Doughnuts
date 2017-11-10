@@ -1,4 +1,4 @@
-     $(function (){
+/*     $(function (){
         var socket = io();
 
         $(window).on('mousemove', function(e){
@@ -21,4 +21,5 @@
           window.scrollTo(0, document.body.scrollHeight);
         });
 
-      });
+	});*/
+
