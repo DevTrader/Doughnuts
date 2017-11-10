@@ -57,7 +57,8 @@ let camera, controls, scene, renderer, mesh2, geometry, material;
 			mesh2 = new THREE.Mesh(geometry, material);
 			mesh2.position.set(Math.random()* 100,Math.random()* 100,Math.random()* 100);
 			scene.add(mesh2);
-			console.log('donut');
+			console.log('donut added');
+
 		};
 
 
@@ -66,11 +67,12 @@ let camera, controls, scene, renderer, mesh2, geometry, material;
 			requestAnimationFrame(animate);
 			controls.update();
 
-  			randomColor = (Math.random() * 0xffffff);
-  			light.color.setHex ( randomColor );
+  			//randomColor = (Math.random() * 0xffffff);
+  			//light.color.setHex ( randomColor );
 
 		};
 
 		function render(){
 			renderer.render(scene, camera);
+			console.log('hi');
 		};

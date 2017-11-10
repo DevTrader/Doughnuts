@@ -7,7 +7,7 @@
           });
 
         socket.on('draw', function(p){
-          console.log(p);
+          //console.log(p);
 
         });
 

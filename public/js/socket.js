@@ -17,12 +17,13 @@
           return false;
         });
         socket.on('chat message', function(msg){
+          addDonut();
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
         });
 
-        $(window).click(function(e){
-          addDonut();
-        })
+        // $(window).click(function(e){
+        //   addDonut();
+        // })
 
       });

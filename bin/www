@@ -9,7 +9,6 @@ var debug = require('debug')('passport-local-express4:server');
 var http = require('http');
 
 
-
 /**
  * Get port from environment and store in Express.
  */
@@ -24,7 +23,7 @@ var io = require('socket.io')(server);
 
 io.on('connection',function(socket){
   socket.on('position', function(msg){
-    console.log(msg);
+    //console.log(msg);
    io.emit('draw', msg);
   });
 
@@ -32,7 +31,6 @@ io.on('connection',function(socket){
     io.emit('chat message', msg);
   });
 }); 
-
 
 
  server.listen(port, function(){
